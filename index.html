@@ -1,14 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample HTML Page</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where No One Goes</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Content goes here -->
-     <h1>Interactive Scene Reveal</h1>
-    <script src="script.js"></script>
+
+  <!-- SCENE 1: Tickets -->
+<section id="scene1" class="screen">
+    <div class="videoWrap">
+      <video id="ticketsVideo" class="introVideo" autoplay muted playsinline>
+        <source src="assets/intro/tickets.mp4" type="video/mp4" />
+      </video>
+  
+      <!-- TEXT OVERLAY -->
+      <div class="caption">
+        <h1>Ticket to Where No One Goes</h1>
+        <p>
+          Four travelers, four tickets, one strange destination. Each ticket represents
+          a different “lens” for how we want the journey to look and feel.
+          More description
+        </p>
+      </div>
+  
+      <!-- Shown after video ends -->
+      <button id="next1" class="nextBtn hidden" type="button" aria-label="Next">
+        Next 
+      </button>
+    </div>
+  </section>
+  
+  <!-- SCENE 2: Plane -->
+<section id="scene2" class="screen hidden">
+    <div class="videoWrap">
+      <video id="planeVideo" class="introVideo" autoplay muted playsinline>
+        <source src="assets/intro/plane.mp4" type="video/mp4" />
+      </video>
+  
+      <!-- TEXT OVERLAY -->
+      <div class="caption">
+        <h1>Flight to the Unknown</h1>
+        <p>
+          A short flight into the in-between, where the world hasn’t chosen its colors yet.
+          What we bring with us will shape the scene.
+          More description
+        </p>
+      </div>
+  
+      <!-- Shown after video ends -->
+      <button id="next2" class="nextBtn hidden" type="button" aria-label="Next">
+        Next 
+      </button>
+    </div>
+  </section>
+  
+
+  <!-- SCENE 3: Interactive Reveal -->
+  <section id="scene3" class="hidden">
+    <div class="scene">
+      <div class="frame">
+        <!-- Base BW -->
+        <img src="assets/background/scene_bw.png" class="layer" alt="Black and white scene" />
+
+        <!-- Overlays -->
+        <img id="temple" src="assets/background/overlay_temple_deer.png" class="layer hidden" alt="" />
+        <img id="greens" src="assets/background/overlay_grass_trees.png" class="layer hidden" alt="" />
+        <img id="sky" src="assets/background/overlay_sky.png" class="layer hidden" alt="" />
+        <img id="sun" src="assets/background/overlay_sunlight.png" class="layer hidden" alt="" />
+
+        <!-- Final full color -->
+        <img id="full" src="assets/background/background-scene.png" class="layer hidden" alt="Full color scene" />
+      </div>
+    </div>
+
+    <!-- Buttons below scene -->
+    <div class="buttons">
+      <button class="person-btn" data-layer="temple" type="button">
+        <img src="assets/buttons/button-umer.png" alt="Umer" />
+        <span>Umer</span>
+      </button>
+
+      <button class="person-btn" data-layer="sun" type="button">
+        <img src="assets/buttons/button-anna.png" alt="Anna" />
+        <span>Anna</span>
+      </button>
+
+      <button class="person-btn" data-layer="sky" type="button">
+        <img src="assets/buttons/button-chantal.png" alt="Chantal" />
+        <span>Chantal</span>
+      </button>
+
+      <button class="person-btn" data-layer="greens" type="button">
+        <img src="assets/buttons/button-lei.png" alt="Lei" />
+        <span>Lei</span>
+      </button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>

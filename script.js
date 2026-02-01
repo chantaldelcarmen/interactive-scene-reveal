@@ -58,13 +58,24 @@ function updateScene() {
   // Show/hide overlays according to toggles
   layers.forEach((id) => setHidden(id, !state[id]));
 
+  // // Show full color only when all are active
+  // if (allActive) {
+  //   layers.forEach((id) => setHidden(id, true));
+  //   setHidden("full", false);
+  // } else {
+  //   setHidden("full", true);
+  // }
+
   // Show full color only when all are active
   if (allActive) {
     layers.forEach((id) => setHidden(id, true));
     setHidden("full", false);
+
+    triggerMagicalReveal();
   } else {
     setHidden("full", true);
   }
+
 }
 
 document.querySelectorAll(".person-btn").forEach((btn) => {
@@ -80,3 +91,18 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
 
 // Initialize interactive scene state (not visible until scene3)
 updateScene();
+
+let hasRevealed = false;
+
+function triggerMagicalReveal() {
+  if (hasRevealed) return;
+  hasRevealed = true;
+
+  setTimeout(() => {
+    // Make it fullscreen
+    scene3.classList.add("magical-reveal");
+
+    // Show magical effects
+    setHidden("magical-effects", false);
+  }, 500);
+}

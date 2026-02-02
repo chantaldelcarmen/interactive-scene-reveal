@@ -81,9 +81,18 @@ body {
   transform: translateY(-1px);
 }
 
-/* Scene 3 (interactive scene) */
+/* Clickable scene cursor */
+.clickable-scene {
+  cursor: pointer;
+}
 
-#scene3 {
+.clickable-scene:hover {
+  opacity: 0.95;
+}
+
+/* Scene 4 (interactive scene) */
+
+#scene4 {
   padding: 60px 20px 70px;
   display: flex;
   flex-direction: column;

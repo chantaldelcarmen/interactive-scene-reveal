@@ -186,6 +186,11 @@ function triggerMagicalReveal() {
   if (hasRevealed) return;
   hasRevealed = true;
 
+  // Close all description popups
+  document.querySelectorAll(".description-popup").forEach(popup => {
+    popup.classList.remove("active");
+  });
+
   // Step 1: Hide buttons
   document.querySelector(".buttons").classList.add("fade-out");
 

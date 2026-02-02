@@ -263,10 +263,6 @@ body {
   transform: scale(0.96);
 }
 
-<<<<<<< HEAD
-/* Fade out buttons */
-.buttons.fade-out {
-=======
 
 /*======== DESCRIPTION POPUPS ========*/
 
@@ -320,25 +316,16 @@ body {
   font-family: 'Lora', serif;
 }
 
-
-/*======== MAGICAL REVEAL ========*/
-
-/* Fullscreen scene for magical effects */
-#scene4.magical-reveal .frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  max-width: 100vw;
-  border-radius: 0;
-  z-index: 100;
-  transition: all 2.5s ease-out;
+/* Fade out buttons */
+.buttons.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
-/* Hide buttons during final reveal */
-#scene4.magical-reveal .buttons {
->>>>>>> 535436f (Added captions for button reveals)
+/* Hide descriptions during magical reveal */
+#scene4.zoom-in .descriptions-container,
+#scene4.magical-reveal .descriptions-container {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;

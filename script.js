@@ -2,6 +2,7 @@
 const muteToggle = document.getElementById("muteToggle");
 const muteIcon = document.querySelector(".mute-icon");
 const unmuteIcon = document.querySelector(".unmute-icon");
+const magicalAudio = document.getElementById("magicalAudio");
 let isMuted = true;
 
 muteToggle.addEventListener("click", () => {
@@ -10,10 +11,45 @@ muteToggle.addEventListener("click", () => {
   // Toggle all videos
   ticketsVideo.muted = isMuted;
   planeVideo.muted = isMuted;
+  magicalAudio.muted = isMuted;
   
   // Toggle icons
   muteIcon.classList.toggle("hidden", !isMuted);
   unmuteIcon.classList.toggle("hidden", isMuted);
+  
+  // If unmuting, try to play current video
+  if (!isMuted) {
+    if (!scene1.classList.contains('hidden')) ticketsVideo.play();
+    if (!scene2.classList.contains('hidden')) planeVideo.play();
+  }
+});
+
+// Replay Button
+const replayBtn = document.getElementById("replayBtn");
+replayBtn.addEventListener("click", () => {
+  // Stop and reset magical audio
+  magicalAudio.pause();
+  magicalAudio.currentTime = 0;
+  
+  // Hide all scenes
+  scene1.classList.remove("hidden");
+  scene2.classList.add("hidden");
+  scene3.classList.add("hidden");
+  scene4.classList.add("hidden");
+  scene4.classList.remove("magical-reveal");
+  
+  // Hide magical effects
+  setHidden("magical-effects", true);
+  
+  // Reset state
+  Object.keys(state).forEach(key => state[key] = false);
+  document.querySelectorAll(".person-btn").forEach(btn => btn.classList.remove("active"));
+  hasRevealed = false;
+  updateScene();
+  
+  // Reset and restart tickets video
+  ticketsVideo.currentTime = 0;
+  ticketsVideo.play().catch(() => {});
 });
 
 // Scene switching 
@@ -154,5 +190,21 @@ function triggerMagicalReveal() {
 
     // Show magical effects
     setHidden("magical-effects", false);
+
+    // Play magical audio with fade-in
+    magicalAudio.muted = isMuted;
+    magicalAudio.volume = 0;
+    magicalAudio.play().catch(err => console.log("Audio play prevented:", err));
+    
+    // Fade in audio over 3 seconds
+    let volume = 0;
+    const fadeIn = setInterval(() => {
+      if (volume < 0.6) {
+        volume += 0.02;
+        magicalAudio.volume = Math.min(volume, 0.6);
+      } else {
+        clearInterval(fadeIn);
+      }
+    }, 100);
   }, 500);
 }

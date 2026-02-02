@@ -416,7 +416,7 @@ body {
 }
 
 .reveal-line {
-  font-size: clamp(11px, 1.3vw, 14px);
+  font-size: clamp(10px, 1.1vw, 12px);
   margin: 15px 0;
   text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
   opacity: 0;

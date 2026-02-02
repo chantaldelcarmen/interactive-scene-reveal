@@ -84,11 +84,6 @@ planeVideo.addEventListener("ended", () => {
   advanceToScene(scene2, scene3);
 });
 
-// Make scene 2 clickable to advance to scene 3
-document.querySelector("#scene2 .videoWrap").addEventListener("click", () => {
-  advanceToScene(scene2, scene3);
-});
-
 // Auto-advance scene 3 after 6 seconds (no click handler - auto only)
 scene3.addEventListener("transitionend", (e) => {
   if (e.target === scene3 && !scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {

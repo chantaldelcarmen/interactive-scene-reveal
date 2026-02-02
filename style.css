@@ -272,7 +272,7 @@ body {
 
 /* Soften scene 3 window seat image */
 #windowseatImage {
-  filter: grayscale(100%) brightness(1.15) contrast(0.85);
+  filter: none;
   opacity: 0.95;
 }
 

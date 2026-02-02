@@ -15,8 +15,7 @@ startBtn.addEventListener("click", () => {
 const muteToggle = document.getElementById("muteToggle");
 const muteIcon = document.querySelector(".mute-icon");
 const unmuteIcon = document.querySelector(".unmute-icon");
-const magicalAudio = document.getElementById("magicalAudio");
-let isMuted = false;
+const magicalAudio = document.getElementById("magicalAudio");const airplaneSecurityAudio = document.getElementById("airplaneSecurityAudio");let isMuted = false;
 
 muteToggle.addEventListener("click", () => {
   isMuted = !isMuted;
@@ -24,7 +23,9 @@ muteToggle.addEventListener("click", () => {
   // Toggle all videos
   ticketsVideo.muted = isMuted;
   planeVideo.muted = isMuted;
+  windowseatVideo.muted = isMuted;
   magicalAudio.muted = isMuted;
+  airplaneSecurityAudio.muted = isMuted;
   
   // Toggle icons
   muteIcon.classList.toggle("hidden", !isMuted);
@@ -34,6 +35,7 @@ muteToggle.addEventListener("click", () => {
   if (!isMuted) {
     if (!scene1.classList.contains('hidden')) ticketsVideo.play();
     if (!scene2.classList.contains('hidden')) planeVideo.play();
+    if (!scene3.classList.contains('hidden')) windowseatVideo.play();
   }
 });
 
@@ -50,11 +52,17 @@ pauseBtn.addEventListener("click", () => {
     // Pause all media
     ticketsVideo.pause();
     planeVideo.pause();
+    windowseatVideo.pause();
+    airplaneSecurityAudio.pause();
     magicalAudio.pause();
   } else {
     // Resume playing based on which scene is active
     if (!scene1.classList.contains('hidden')) ticketsVideo.play();
     if (!scene2.classList.contains('hidden')) planeVideo.play();
+    if (!scene3.classList.contains('hidden')) {
+      windowseatVideo.play();
+      airplaneSecurityAudio.play();
+    }
     if (!magicalAudio.paused || hasRevealed) magicalAudio.play().catch(() => {});
   }
   
@@ -108,7 +116,7 @@ const scene4 = document.getElementById("scene4");
 
 const ticketsVideo = document.getElementById("ticketsVideo");
 const planeVideo = document.getElementById("planeVideo");
-const windowseatImage = document.getElementById("windowseatImage");
+const windowseatVideo = document.getElementById("windowseatImage");
 
 let autoAdvanceTimer = null;
 
@@ -126,6 +134,16 @@ ticketsVideo.addEventListener("ended", () => {
 // After plane video ends -> advance to scene 3
 planeVideo.addEventListener("ended", () => {
   advanceToScene(scene2, scene3);
+  
+  // Play the windowseat video when scene 3 appears
+  windowseatVideo.currentTime = 0;
+  windowseatVideo.playbackRate = 0.6;
+  windowseatVideo.play().catch(() => {});
+  
+  // Play airplane security audio
+  airplaneSecurityAudio.currentTime = 0;
+  airplaneSecurityAudio.muted = isMuted;
+  airplaneSecurityAudio.play().catch(() => {});
 });
 
 // Auto-advance scene 3 after 6 seconds (no click handler - auto only)

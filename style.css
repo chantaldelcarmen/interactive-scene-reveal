@@ -113,6 +113,12 @@ body {
   filter: grayscale(100%);
 }
 
+/* Soften scene 3 window seat image */
+#windowseatImage {
+  filter: grayscale(100%) brightness(1.15) contrast(0.85);
+  opacity: 0.95;
+}
+
 /* Text overlay for intro scenes */
 .caption {
   max-width: min(85%, 780px);
@@ -202,6 +208,12 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Soften the black and white base image to match intro scenes */
+.layer:first-child {
+  filter: brightness(1.15) contrast(0.85);
+  opacity: 0.95;
 }
 
 /* Buttons below */

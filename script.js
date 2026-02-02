@@ -1,3 +1,21 @@
+// Mute Toggle
+const muteToggle = document.getElementById("muteToggle");
+const muteIcon = document.querySelector(".mute-icon");
+const unmuteIcon = document.querySelector(".unmute-icon");
+let isMuted = true;
+
+muteToggle.addEventListener("click", () => {
+  isMuted = !isMuted;
+  
+  // Toggle all videos
+  ticketsVideo.muted = isMuted;
+  planeVideo.muted = isMuted;
+  
+  // Toggle icons
+  muteIcon.classList.toggle("hidden", !isMuted);
+  unmuteIcon.classList.toggle("hidden", isMuted);
+});
+
 // Scene switching 
 const scene1 = document.getElementById("scene1");
 const scene2 = document.getElementById("scene2");

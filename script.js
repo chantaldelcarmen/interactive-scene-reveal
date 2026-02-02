@@ -37,6 +37,10 @@ replayBtn.addEventListener("click", () => {
   scene3.classList.add("hidden");
   scene4.classList.add("hidden");
   scene4.classList.remove("magical-reveal");
+  scene4.classList.remove("zoom-in");
+  
+  // Show buttons again
+  document.querySelector(".buttons").classList.remove("fade-out");
   
   // Hide magical effects
   setHidden("magical-effects", true);
@@ -80,23 +84,13 @@ planeVideo.addEventListener("ended", () => {
   advanceToScene(scene2, scene3);
 });
 
-// Make scene 2 clickable to advance to scene 3
-document.querySelector("#scene2 .videoWrap").addEventListener("click", () => {
-  advanceToScene(scene2, scene3);
-});
-
-// Make scene 3 clickable to advance to scene 4
-document.querySelector("#scene3 .videoWrap").addEventListener("click", () => {
-  advanceToScene(scene3, scene4);
-});
-
-// Auto-advance scene 3 after 15 seconds
-scene3.addEventListener("transitionend", () => {
-  if (!scene3.classList.contains("hidden")) {
+// Auto-advance scene 3 after 6 seconds (no click handler - auto only)
+scene3.addEventListener("transitionend", (e) => {
+  if (e.target === scene3 && !scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = setTimeout(() => {
       advanceToScene(scene3, scene4);
-    }, 15000);
+    }, 6000);
   }
 });
 
@@ -104,11 +98,11 @@ scene3.addEventListener("transitionend", () => {
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.attributeName === "class") {
-      if (!scene3.classList.contains("hidden")) {
+      if (!scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
         clearTimeout(autoAdvanceTimer);
         autoAdvanceTimer = setTimeout(() => {
           advanceToScene(scene3, scene4);
-        }, 15000);
+        }, 6000);
       } else {
         clearTimeout(autoAdvanceTimer);
       }
@@ -119,6 +113,7 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(scene3, { attributes: true });
 
 function advanceToScene(fromScene, toScene) {
+  clearTimeout(autoAdvanceTimer);
   fromScene.classList.add("hidden");
   toScene.classList.remove("hidden");
 }
@@ -166,12 +161,29 @@ function updateScene() {
 
 document.querySelectorAll(".person-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const id = btn.dataset.layer;
-    if (!(id in state)) return;
+    const layerId = btn.dataset.layer;
+    const personName = btn.dataset.name;
+    if (!(layerId in state)) return;
 
-    state[id] = !state[id];
-    btn.classList.toggle("active", state[id]);
+    state[layerId] = !state[layerId];
+    btn.classList.toggle("active", state[layerId]);
     updateScene();
+
+    // Show only one description at a time
+    const allPopups = document.querySelectorAll(".description-popup");
+    const currentPopup = document.querySelector(`.description-popup[data-name="${personName}"]`);
+    
+    if (currentPopup) {
+      const isActive = currentPopup.classList.contains("active");
+      
+      // Close all descriptions
+      allPopups.forEach(popup => popup.classList.remove("active"));
+      
+      // If this description wasn't active, show it (otherwise it stays closed)
+      if (!isActive) {
+        currentPopup.classList.add("active");
+      }
+    }
   });
 });
 
@@ -184,11 +196,22 @@ function triggerMagicalReveal() {
   if (hasRevealed) return;
   hasRevealed = true;
 
-  setTimeout(() => {
-    // Make it fullscreen
-    scene4.classList.add("magical-reveal");
+  // Close all description popups
+  document.querySelectorAll(".description-popup").forEach(popup => {
+    popup.classList.remove("active");
+  });
 
-    // Show magical effects
+  // Step 1: Hide buttons
+  // document.querySelector(".buttons").classList.add("fade-out");
+
+  // Step 2: After buttons fade, start zoom animation
+  setTimeout(() => {
+    scene4.classList.add("zoom-in");
+  }, 500);
+
+  // Step 3: After zoom completes, show magical effects
+  setTimeout(() => {
+    scene4.classList.add("magical-reveal");
     setHidden("magical-effects", false);
 
     // Play magical audio with fade-in
@@ -206,5 +229,5 @@ function triggerMagicalReveal() {
         clearInterval(fadeIn);
       }
     }, 100);
-  }, 500);
+  }, 3500);
 }

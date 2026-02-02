@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Where No One Goes</title>
+  <title>Common Ground</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
@@ -30,12 +30,7 @@
 
   <!-- SCENE 1: Tickets -->
 <section id="scene1" class="screen">
-    <div class="videoWrap">
-      <video id="ticketsVideo" class="introVideo" autoplay muted playsinline>
-        <source src="assets/intro/Tickets.mp4" type="video/mp4" />
-      </video>
-  
-      <!-- TEXT OVERLAY -->
+    <!-- TEXT OVERLAY -->
     <div class="caption">
       <h1>Tickets to an Unnamed Magical Place</h1>
       <p>
@@ -44,48 +39,89 @@
         and shape the journey.
       </p>
     </div>
-
+    
+    <div class="videoWrap">
+      <video id="ticketsVideo" class="introVideo" autoplay muted playsinline>
+        <source src="assets/intro/Tickets.mp4" type="video/mp4" />
+      </video>
     </div>
   </section> 
   
   <!-- SCENE 2: Plane -->
 <section id="scene2" class="screen hidden">
-    <div class="videoWrap clickable-scene">
+    <!-- TEXT OVERLAY -->
+    <div class="caption">
+      <h1>Flight to the Unknown</h1>
+      <p>
+        A short flight into the in between, where the world hasn't chosen its colors yet.
+        What we bring with us will shape the scene.
+      </p>
+    </div>
+    
+    <div class="videoWrap">
       <video id="planeVideo" class="introVideo" autoplay muted playsinline>
         <source src="assets/intro/Airplane.mp4" type="video/mp4" />
       </video>
-  
-      <!-- TEXT OVERLAY -->
-      <div class="caption">
-        <h1>Flight to the Unknown</h1>
-        <p>
-          A short flight into the in between, where the world hasn’t chosen its colors yet.
-          What we bring with us will shape the scene.
-        </p>
-      </div>
-  
-
     </div>
   </section>
 
   <!-- SCENE 3: Inside the Plane -->
 <section id="scene3" class="screen hidden">
-    <div class="videoWrap clickable-scene">
-      <img id="windowseatImage" src="assets/intro/Windowseat.png" class="introVideo" alt="Window seat view" />
-  
-      <!-- TEXT OVERLAY -->
-      <div class="caption">
+    <!-- TEXT OVERLAY -->
+    <div class="caption">
       <h1>Same Flight, Different Views</h1>
       <p>
         We're traveling together, but each of us notices something different. This moment
         sets up how our individual perspectives will shape what we experience next.
       </p>
     </div>
+    
+    <div class="videoWrap">
+      <img id="windowseatImage" src="assets/intro/Windowseat.png" class="introVideo" alt="Window seat view" />
     </div>
   </section>
 
   <!-- SCENE 4: Interactive Reveal -->
   <section id="scene4" class="hidden">
+    <!-- Buttons above scene -->
+    <div class="buttons">
+      <button class="person-btn" data-layer="temple" data-name="Umer" type="button">
+        <img src="assets/buttons/button-umer.png" alt="Umer" />
+        <span>Umer</span>
+      </button>
+
+      <button class="person-btn" data-layer="sun" data-name="Anna" type="button">
+        <img src="assets/buttons/button-anna.png" alt="Anna" />
+        <span>Anna</span>
+      </button>
+
+      <button class="person-btn" data-layer="sky" data-name="Chantal" type="button">
+        <img src="assets/buttons/button-chantal.png" alt="Chantal" />
+        <span>Chantal</span>
+      </button>
+
+      <button class="person-btn" data-layer="greens" data-name="Lei" type="button">
+        <img src="assets/buttons/button-lei.png" alt="Lei" />
+        <span>Lei</span>
+      </button>
+    </div>
+
+    <!-- Description Popups -->
+    <div class="descriptions-container">
+      <div class="description-popup" data-name="Umer">
+        <p>Umer's lens adds warm yellow tones, lighting up the deer and temple highlighting comfort, connection, and meaning.</p>
+      </div>
+      <div class="description-popup" data-name="Anna">
+        <p>Anna's lens brings in sunlight boosting energy and brightness to lift the mood of the whole scene.</p>
+      </div>
+      <div class="description-popup" data-name="Chantal">
+        <p>Chantal's lens turns the sky blue making the scene a calm space and a bigger picture feeling.</p>
+      </div>
+      <div class="description-popup" data-name="Lei">
+        <p>Lei's lens turns the grass and trees bright green showing a focus on growth, nature, and change over time.</p>
+      </div>
+    </div>
+
     <div class="scene">
       <div class="frame">
         <!-- Base BW -->
@@ -123,35 +159,12 @@
             <p class="reveal-subtitle">A shared becoming</p>
             <p class="reveal-line line-1">Four perspectives, one vision.</p>
             <p class="reveal-line line-2">Where we meet, magic unfolds.</p>
-            <p class="reveal-line line-3">This is the place we made together.</p>
+            <p class="reveal-line line-3">This is the place we made <strong><em>together</em></strong>.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Buttons below scene -->
-    <div class="buttons">
-      <button class="person-btn" data-layer="temple" type="button">
-        <img src="assets/buttons/button-umer.png" alt="Umer" />
-        <span>Umer</span>
-      </button>
-
-      <button class="person-btn" data-layer="sun" type="button">
-        <img src="assets/buttons/button-anna.png" alt="Anna" />
-        <span>Anna</span>
-      </button>
-
-      <button class="person-btn" data-layer="sky" type="button">
-        <img src="assets/buttons/button-chantal.png" alt="Chantal" />
-        <span>Chantal</span>
-      </button>
-
-      <button class="person-btn" data-layer="greens" type="button">
-        <img src="assets/buttons/button-lei.png" alt="Lei" />
-        <span>Lei</span>
-      </button>
-    </div>
-  </section>
 
   <script src="script.js"></script>
 </body>

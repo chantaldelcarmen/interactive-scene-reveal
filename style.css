@@ -17,6 +17,132 @@ body {
   background: #fff;
 }
 
+/* Title Screen */
+.title-screen {
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+}
+
+.title-content {
+  animation: fadeIn 1.5s ease-in;
+}
+
+.title-text {
+  font-family: 'Lora', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.05em;
+}
+
+.subtitle-text {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0 0 3rem 0;
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+}
+
+.start-btn {
+  font-family: 'Lora', serif;
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 18px;
+  padding: 1rem 3rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+  background: #fff;
+  color: #000;
+  transform: scale(1.05);
+}
+
+.start-btn:active {
+  transform: scale(0.98);
+}
+
+.credits {
+  margin-top: 3rem;
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  opacity: 0.85;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+.credits p {
+  margin: 0.5rem 0;
+}
+
+.credits-course {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.credits-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 1rem auto;
+}
+
+.credits-team {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive title screen */
+@media (max-width: 768px) {
+  .title-text {
+    font-size: 2.5rem;
+  }
+  .subtitle-text {
+    font-size: 1rem;
+  }
+  .start-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+  .credits {
+    font-size: 0.65rem;
+  }
+  .credits-course {
+    font-size: 0.6rem;
+  }
+  .credits-team {
+    font-size: 0.7rem;
+  }
+}
+
 /* Mute Toggle Button */
 .mute-toggle {
   position: fixed;
@@ -574,7 +700,10 @@ body {
     transform: translateY(0);
   }
 }
-
+.title-screen.fade-out {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
 /* Sparkle overlay effect */
 .sparkles {
     position: absolute;

@@ -157,10 +157,13 @@ body {
 /* Scene 4 (interactive scene) */
 
 #scene4 {
-  padding: 60px 20px 70px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 28px;
+  gap: 40px;
 }
 
 .scene {
@@ -170,11 +173,12 @@ body {
 
 .frame {
   position: relative;
-  width: min(90vw, 900px); /* responsive */
-  aspect-ratio: 4 / 3;
+  width: min(95vw, 1200px);
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  background: #000;
 }
 
 .layer {
@@ -187,11 +191,11 @@ body {
 
 /* Buttons below */
 .buttons {
-  margin-top: 34px;
   display: flex;
-  gap: 30px;
+  gap: 40px;
   justify-content: center;
   flex-wrap: wrap;
+  max-width: min(95vw, 1200px);
 }
 
 .person-btn {
@@ -206,8 +210,8 @@ body {
 }
 
 .person-btn img {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
   transition: transform 0.15s ease, opacity 0.15s ease;
@@ -238,14 +242,15 @@ body {
 /* Fullscreen scene for magical effects */
 #scene4.magical-reveal .frame {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100vw;
   height: 100vh;
   max-width: 100vw;
   border-radius: 0;
   z-index: 100;
-  transition: all 2.5s ease-out;
+  transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Hide buttons during final reveal */
@@ -383,7 +388,6 @@ body {
   font-size: clamp(18px, 2.5vw, 28px);
   font-style: italic;
   margin: 0 0 40px;
-  opacity: 0.9;
   text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
   opacity: 0;
   animation: fadeInText 2s ease-out 4.5s forwards;

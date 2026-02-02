@@ -2,22 +2,17 @@
 const scene1 = document.getElementById("scene1");
 const scene2 = document.getElementById("scene2");
 const scene3 = document.getElementById("scene3");
+const scene4 = document.getElementById("scene4");
 
 const ticketsVideo = document.getElementById("ticketsVideo");
 const planeVideo = document.getElementById("planeVideo");
+const windowseatImage = document.getElementById("windowseatImage");
 
-const next1 = document.getElementById("next1");
-const next2 = document.getElementById("next2");
+let autoAdvanceTimer = null;
 
-// After tickets video ends -> show Next
+// After tickets video ends -> advance to scene2
 ticketsVideo.addEventListener("ended", () => {
-  next1.classList.remove("hidden");
-});
-
-// Next from scene1 -> scene2
-next1.addEventListener("click", () => {
-  scene1.classList.add("hidden");
-  scene2.classList.remove("hidden");
+  advanceToScene(scene1, scene2);
 
   // Restart plane video cleanly
   planeVideo.currentTime = 0;
@@ -26,16 +21,53 @@ next1.addEventListener("click", () => {
   });
 });
 
-// After plane video ends -> show Next
+// After plane video ends -> advance to scene 3
 planeVideo.addEventListener("ended", () => {
-  next2.classList.remove("hidden");
+  advanceToScene(scene2, scene3);
 });
 
-// Next from scene2 -> scene3 (interactive)
-next2.addEventListener("click", () => {
-  scene2.classList.add("hidden");
-  scene3.classList.remove("hidden");
+// Make scene 2 clickable to advance to scene 3
+document.querySelector("#scene2 .videoWrap").addEventListener("click", () => {
+  advanceToScene(scene2, scene3);
 });
+
+// Make scene 3 clickable to advance to scene 4
+document.querySelector("#scene3 .videoWrap").addEventListener("click", () => {
+  advanceToScene(scene3, scene4);
+});
+
+// Auto-advance scene 3 after 15 seconds
+scene3.addEventListener("transitionend", () => {
+  if (!scene3.classList.contains("hidden")) {
+    clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = setTimeout(() => {
+      advanceToScene(scene3, scene4);
+    }, 15000);
+  }
+});
+
+// Also start timer when scene3 becomes visible (in case transition event doesn't fire)
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === "class") {
+      if (!scene3.classList.contains("hidden")) {
+        clearTimeout(autoAdvanceTimer);
+        autoAdvanceTimer = setTimeout(() => {
+          advanceToScene(scene3, scene4);
+        }, 15000);
+      } else {
+        clearTimeout(autoAdvanceTimer);
+      }
+    }
+  });
+});
+
+observer.observe(scene3, { attributes: true });
+
+function advanceToScene(fromScene, toScene) {
+  fromScene.classList.add("hidden");
+  toScene.classList.remove("hidden");
+}
 
 
 //Interactive overlays (toggle on/off) 
@@ -89,7 +121,7 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
   });
 });
 
-// Initialize interactive scene state (not visible until scene3)
+// Initialize interactive scene state (not visible until scene4)
 updateScene();
 
 let hasRevealed = false;

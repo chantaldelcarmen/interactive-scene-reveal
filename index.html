@@ -12,53 +12,60 @@
 <section id="scene1" class="screen hidden">
     <div class="videoWrap">
       <video id="ticketsVideo" class="introVideo" autoplay muted playsinline>
-        <source src="assets/intro/tickets.mp4" type="video/mp4" />
+        <source src="assets/intro/Tickets.mp4" type="video/mp4" />
       </video>
   
       <!-- TEXT OVERLAY -->
-      <div class="caption">
-        <h1>Ticket to Where No One Goes</h1>
-        <p>
-          Four travelers, four tickets, one strange destination. Each ticket represents
-          a different “lens” for how we want the journey to look and feel.
-          More description
-        </p>
-      </div>
-  
-      <!-- Shown after video ends -->
-      <button id="next1" class="nextBtn hidden" type="button" aria-label="Next">
-        Next 
-      </button>
+    <div class="caption">
+      <h1>Tickets to an Unnamed Magical Place</h1>
+      <p>
+        Four travelers, four tickets, one shared destination reflecting our collective
+        interest in traveling. Each ticket represents a different lens for how we see
+        and shape the journey.
+      </p>
     </div>
-  </section>
+
+    </div>
+  </section> 
   
   <!-- SCENE 2: Plane -->
-<section id="scene2" class="screen">
-    <div class="videoWrap">
+<section id="scene2" class="screen hidden">
+    <div class="videoWrap clickable-scene">
       <video id="planeVideo" class="introVideo" autoplay muted playsinline>
-        <source src="assets/intro/plane.mp4" type="video/mp4" />
+        <source src="assets/intro/Airplane.mp4" type="video/mp4" />
       </video>
   
       <!-- TEXT OVERLAY -->
       <div class="caption">
         <h1>Flight to the Unknown</h1>
         <p>
-          A short flight into the in-between, where the world hasn’t chosen its colors yet.
+          A short flight into the in between, where the world hasn’t chosen its colors yet.
           What we bring with us will shape the scene.
-          More description
         </p>
       </div>
   
-      <!-- Shown after video ends -->
-      <button id="next2" class="nextBtn hidden" type="button" aria-label="Next">
-        Next 
-      </button>
+
     </div>
   </section>
-  
 
-  <!-- SCENE 3: Interactive Reveal -->
-  <section id="scene3" class="hidden">
+  <!-- SCENE 3: Inside the Plane -->
+<section id="scene3" class="screen hidden">
+    <div class="videoWrap clickable-scene">
+      <img id="windowseatImage" src="assets/intro/Windowseat.png" class="introVideo" alt="Window seat view" />
+  
+      <!-- TEXT OVERLAY -->
+      <div class="caption">
+      <h1>Same Flight, Different Views</h1>
+      <p>
+        We're traveling together, but each of us notices something different. This moment
+        sets up how our individual perspectives will shape what we experience next.
+      </p>
+    </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4: Interactive Reveal -->
+  <section id="scene4" class="hidden">
     <div class="scene">
       <div class="frame">
         <!-- Base BW -->

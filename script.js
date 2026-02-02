@@ -90,13 +90,13 @@ document.querySelector("#scene3 .videoWrap").addEventListener("click", () => {
   advanceToScene(scene3, scene4);
 });
 
-// Auto-advance scene 3 after 15 seconds
+// Auto-advance scene 3 after 5 seconds
 scene3.addEventListener("transitionend", () => {
   if (!scene3.classList.contains("hidden")) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = setTimeout(() => {
       advanceToScene(scene3, scene4);
-    }, 15000);
+    }, 5000);
   }
 });
 

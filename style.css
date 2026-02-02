@@ -338,19 +338,17 @@ body {
 
 /*======== MAGICAL REVEAL ========*/
 
-/* Remove gap and padding during zoom */
+/* Center and remove gap/padding during zoom */
 #scene4.zoom-in,
 #scene4.magical-reveal {
   gap: 0;
   padding: 0;
+  justify-content: center;
 }
 
 /* Zoom in effect - happens before magical reveal */
 #scene4.zoom-in .scene {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.8);
+  transform: scale(1.8);
   z-index: 100;
 }
 
@@ -361,10 +359,7 @@ body {
 
 /* Maintain fullscreen during magical effects */
 #scene4.magical-reveal .scene {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.75);
+  transform: scale(1.75);
   z-index: 100;
 }
 

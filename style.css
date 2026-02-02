@@ -172,7 +172,7 @@ body {
 /*======== MAGICAL REVEAL ========*/
 
 /* Fullscreen scene for magical effects */
-#scene3.magical-reveal .frame {
+#scene4.magical-reveal .frame {
   position: fixed;
   top: 0;
   left: 0;
@@ -185,7 +185,7 @@ body {
 }
 
 /* Hide buttons during final reveal */
-#scene3.magical-reveal .buttons {
+#scene4.magical-reveal .buttons {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;

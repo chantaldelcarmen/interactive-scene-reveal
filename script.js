@@ -132,7 +132,7 @@ function triggerMagicalReveal() {
 
   setTimeout(() => {
     // Make it fullscreen
-    scene3.classList.add("magical-reveal");
+    scene4.classList.add("magical-reveal");
 
     // Show magical effects
     setHidden("magical-effects", false);

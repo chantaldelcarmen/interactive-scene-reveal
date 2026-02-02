@@ -89,18 +89,13 @@ document.querySelector("#scene2 .videoWrap").addEventListener("click", () => {
   advanceToScene(scene2, scene3);
 });
 
-// Make scene 3 clickable to advance to scene 4
-document.querySelector("#scene3 .videoWrap").addEventListener("click", () => {
-  advanceToScene(scene3, scene4);
-});
-
-// Auto-advance scene 3 after 5 seconds
-scene3.addEventListener("transitionend", () => {
-  if (!scene3.classList.contains("hidden")) {
+// Auto-advance scene 3 after 6 seconds (no click handler - auto only)
+scene3.addEventListener("transitionend", (e) => {
+  if (e.target === scene3 && !scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = setTimeout(() => {
       advanceToScene(scene3, scene4);
-    }, 5000);
+    }, 6000);
   }
 });
 
@@ -108,11 +103,11 @@ scene3.addEventListener("transitionend", () => {
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.attributeName === "class") {
-      if (!scene3.classList.contains("hidden")) {
+      if (!scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
         clearTimeout(autoAdvanceTimer);
         autoAdvanceTimer = setTimeout(() => {
           advanceToScene(scene3, scene4);
-        }, 15000);
+        }, 6000);
       } else {
         clearTimeout(autoAdvanceTimer);
       }
@@ -123,6 +118,7 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(scene3, { attributes: true });
 
 function advanceToScene(fromScene, toScene) {
+  clearTimeout(autoAdvanceTimer);
   fromScene.classList.add("hidden");
   toScene.classList.remove("hidden");
 }

@@ -37,6 +37,10 @@ replayBtn.addEventListener("click", () => {
   scene3.classList.add("hidden");
   scene4.classList.add("hidden");
   scene4.classList.remove("magical-reveal");
+  scene4.classList.remove("zoom-in");
+  
+  // Show buttons again
+  document.querySelector(".buttons").classList.remove("fade-out");
   
   // Hide magical effects
   setHidden("magical-effects", true);
@@ -184,11 +188,17 @@ function triggerMagicalReveal() {
   if (hasRevealed) return;
   hasRevealed = true;
 
-  setTimeout(() => {
-    // Make it fullscreen
-    scene4.classList.add("magical-reveal");
+  // Step 1: Hide buttons
+  document.querySelector(".buttons").classList.add("fade-out");
 
-    // Show magical effects
+  // Step 2: After buttons fade, start zoom animation
+  setTimeout(() => {
+    scene4.classList.add("zoom-in");
+  }, 500);
+
+  // Step 3: After zoom completes, show magical effects
+  setTimeout(() => {
+    scene4.classList.add("magical-reveal");
     setHidden("magical-effects", false);
 
     // Play magical audio with fade-in
@@ -206,5 +216,5 @@ function triggerMagicalReveal() {
         clearInterval(fadeIn);
       }
     }, 100);
-  }, 500);
+  }, 3500);
 }

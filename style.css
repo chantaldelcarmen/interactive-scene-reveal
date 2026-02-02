@@ -182,6 +182,8 @@ body {
 .scene {
   display: flex;
   justify-content: center;
+  transform-origin: center center;
+  transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .frame {
@@ -249,28 +251,35 @@ body {
   transform: scale(0.96);
 }
 
-
-/*======== MAGICAL REVEAL ========*/
-
-/* Fullscreen scene for magical effects */
-#scene4.magical-reveal .frame {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
-  max-width: 100vw;
-  border-radius: 0;
-  z-index: 100;
-  transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Hide buttons during final reveal */
-#scene4.magical-reveal .buttons {
+/* Fade out buttons */
+.buttons.fade-out {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;
+}
+
+
+/*======== MAGICAL REVEAL ========*/
+
+/* Zoom in effect - happens before magical reveal */
+#scene4.zoom-in .scene {
+  transform: scale(1.8);
+  z-index: 100;
+}
+
+#scene4.zoom-in .frame {
+  border-radius: 0;
+  transition: border-radius 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Maintain fullscreen during magical effects */
+#scene4.magical-reveal .scene {
+  transform: scale(1.75);
+  z-index: 100;
+}
+
+#scene4.magical-reveal .frame {
+  border-radius: 0;
 }
 
 /* Effects container */
@@ -389,7 +398,7 @@ body {
 }
 
 .reveal-title {
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(20px, 3vw, 36px);
   font-weight: 700;
   margin: 0 0 10px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
@@ -398,7 +407,7 @@ body {
 }
 
 .reveal-subtitle {
-  font-size: clamp(18px, 2.5vw, 28px);
+  font-size: clamp(14px, 1.8vw, 20px);
   font-style: italic;
   margin: 0 0 40px;
   text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
@@ -407,7 +416,7 @@ body {
 }
 
 .reveal-line {
-  font-size: clamp(16px, 2vw, 22px);
+  font-size: clamp(12px, 1.5vw, 16px);
   margin: 15px 0;
   text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
   opacity: 0;

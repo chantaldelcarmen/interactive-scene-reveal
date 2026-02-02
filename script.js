@@ -161,12 +161,19 @@ function updateScene() {
 
 document.querySelectorAll(".person-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const id = btn.dataset.layer;
-    if (!(id in state)) return;
+    const layerId = btn.dataset.layer;
+    const personName = btn.dataset.name;
+    if (!(layerId in state)) return;
 
-    state[id] = !state[id];
-    btn.classList.toggle("active", state[id]);
+    state[layerId] = !state[layerId];
+    btn.classList.toggle("active", state[layerId]);
     updateScene();
+
+    // Toggle description popup
+    const descPopup = document.querySelector(`.description-popup[data-name="${personName}"]`);
+    if (descPopup) {
+      descPopup.classList.toggle("active");
+    }
   });
 });
 

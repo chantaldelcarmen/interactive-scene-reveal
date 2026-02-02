@@ -24,6 +24,34 @@ muteToggle.addEventListener("click", () => {
   }
 });
 
+// Replay Button
+const replayBtn = document.getElementById("replayBtn");
+replayBtn.addEventListener("click", () => {
+  // Stop and reset magical audio
+  magicalAudio.pause();
+  magicalAudio.currentTime = 0;
+  
+  // Hide all scenes
+  scene1.classList.remove("hidden");
+  scene2.classList.add("hidden");
+  scene3.classList.add("hidden");
+  scene4.classList.add("hidden");
+  scene4.classList.remove("magical-reveal");
+  
+  // Hide magical effects
+  setHidden("magical-effects", true);
+  
+  // Reset state
+  Object.keys(state).forEach(key => state[key] = false);
+  document.querySelectorAll(".person-btn").forEach(btn => btn.classList.remove("active"));
+  hasRevealed = false;
+  updateScene();
+  
+  // Reset and restart tickets video
+  ticketsVideo.currentTime = 0;
+  ticketsVideo.play().catch(() => {});
+});
+
 // Scene switching 
 const scene1 = document.getElementById("scene1");
 const scene2 = document.getElementById("scene2");

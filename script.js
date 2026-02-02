@@ -16,7 +16,7 @@ const muteToggle = document.getElementById("muteToggle");
 const muteIcon = document.querySelector(".mute-icon");
 const unmuteIcon = document.querySelector(".unmute-icon");
 const magicalAudio = document.getElementById("magicalAudio");
-let isMuted = true;
+let isMuted = false;
 
 muteToggle.addEventListener("click", () => {
   isMuted = !isMuted;

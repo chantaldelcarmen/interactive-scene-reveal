@@ -202,7 +202,7 @@ function triggerMagicalReveal() {
   });
 
   // Step 1: Hide buttons
-  document.querySelector(".buttons").classList.add("fade-out");
+  // document.querySelector(".buttons").classList.add("fade-out");
 
   // Step 2: After buttons fade, start zoom animation
   setTimeout(() => {

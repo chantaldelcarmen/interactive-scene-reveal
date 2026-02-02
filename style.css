@@ -100,6 +100,7 @@ body {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background: #000;
   flex-shrink: 1;
@@ -198,6 +199,7 @@ body {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background: #000;
 }

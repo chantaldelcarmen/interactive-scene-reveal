@@ -2,6 +2,7 @@
 const muteToggle = document.getElementById("muteToggle");
 const muteIcon = document.querySelector(".mute-icon");
 const unmuteIcon = document.querySelector(".unmute-icon");
+const magicalAudio = document.getElementById("magicalAudio");
 let isMuted = true;
 
 muteToggle.addEventListener("click", () => {
@@ -10,10 +11,17 @@ muteToggle.addEventListener("click", () => {
   // Toggle all videos
   ticketsVideo.muted = isMuted;
   planeVideo.muted = isMuted;
+  magicalAudio.muted = isMuted;
   
   // Toggle icons
   muteIcon.classList.toggle("hidden", !isMuted);
   unmuteIcon.classList.toggle("hidden", isMuted);
+  
+  // If unmuting, try to play current video
+  if (!isMuted) {
+    if (!scene1.classList.contains('hidden')) ticketsVideo.play();
+    if (!scene2.classList.contains('hidden')) planeVideo.play();
+  }
 });
 
 // Scene switching 
@@ -154,5 +162,21 @@ function triggerMagicalReveal() {
 
     // Show magical effects
     setHidden("magical-effects", false);
+
+    // Play magical audio with fade-in
+    magicalAudio.muted = isMuted;
+    magicalAudio.volume = 0;
+    magicalAudio.play().catch(err => console.log("Audio play prevented:", err));
+    
+    // Fade in audio over 3 seconds
+    let volume = 0;
+    const fadeIn = setInterval(() => {
+      if (volume < 0.6) {
+        volume += 0.02;
+        magicalAudio.volume = Math.min(volume, 0.6);
+      } else {
+        clearInterval(fadeIn);
+      }
+    }, 100);
   }, 500);
 }

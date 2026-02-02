@@ -47,6 +47,36 @@ body {
   transform: scale(0.95);
 }
 
+/* Pause Button */
+.pause-btn {
+  position: fixed;
+  top: 20px;
+  right: 140px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pause-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.1);
+}
+
+.pause-btn:active {
+  transform: scale(0.95);
+}
+
 /* Replay Button */
 .replay-btn {
   position: fixed;
@@ -100,7 +130,6 @@ body {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background: #000;
   flex-shrink: 1;
@@ -112,12 +141,6 @@ body {
   object-fit: cover;
   display: block;
   filter: grayscale(100%);
-}
-
-/* Soften scene 3 window seat image */
-#windowseatImage {
-  filter: grayscale(100%) brightness(1.15) contrast(0.85);
-  opacity: 0.95;
 }
 
 /* Text overlay for intro scenes */
@@ -181,27 +204,23 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 15px;
-  padding-top: 20px;
-  gap: 24px;
+  justify-content: center;
+  padding: 28px;
+  gap: 40px;
 }
 
 .scene {
   display: flex;
   justify-content: center;
-  transform-origin: center center;
   transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .frame {
   position: relative;
   width: min(95vw, 1200px);
-  max-height: 75vh;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
   background: #000;
 }
@@ -214,20 +233,13 @@ body {
   object-fit: cover;
 }
 
-/* Soften the black and white base image to match intro scenes */
-.layer:first-child {
-  filter: brightness(1.15) contrast(0.85);
-  opacity: 0.95;
-}
-
-/* Buttons above scene */
+/* Buttons below */
 .buttons {
   display: flex;
-  gap: 45px;
+  gap: 40px;
   justify-content: center;
   flex-wrap: wrap;
   max-width: min(95vw, 1200px);
-  flex-shrink: 0;
 }
 
 .person-btn {
@@ -237,20 +249,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 0;
 }
 
 .person-btn img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .person-btn span {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: #111;
 }
@@ -262,109 +274,33 @@ body {
 /* Active ring */
 .person-btn.active img {
   box-shadow:
-    0 0 0 5px #000,
+    0 0 0 4px #000,
     0 6px 16px rgba(0,0,0,0.35);
   opacity: 0.85;
   transform: scale(0.96);
 }
 
 
-/*======== DESCRIPTION POPUPS ========*/
-
-.descriptions-container {
-  position: relative;
-  width: 100%;
-  max-width: min(85%, 780px);
-  height: 30px;
-  margin: 0 auto;
-  padding-bottom: 10px;
-  pointer-events: none;
-}
-
-.description-popup {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  padding: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  color: #000;
-  font-family: 'Lora', serif;
-}
-
-.description-popup.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.description-popup h3 {
-  margin: 0 0 6px 0;
-  font-size: clamp(16px, 2.2vw, 22px);
-  line-height: 1.2;
-  font-weight: 600;
-}
-
-.description-popup p {
-  margin: 0;
-  font-size: clamp(13px, 1.6vw, 17px);
-  line-height: 1.4;
-  opacity: 0.9;
-}
-
-/* Fade out buttons */
-/* .buttons.fade-out {
-  opacity: 0;
-  pointer-events: none;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 1.5s ease 0.5s, max-height 1.5s ease 0.5s;
-} */
-
-/* Hide buttons and descriptions during magical reveal */
-#scene4.zoom-in .buttons,
-#scene4.magical-reveal .buttons,
-#scene4.zoom-in .descriptions-container,
-#scene4.magical-reveal .descriptions-container {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  pointer-events: none;
-  transition: opacity 0.5s ease, max-height 0.5s ease;
-}
-
-
 /*======== MAGICAL REVEAL ========*/
 
-/* Center and remove gap/padding during zoom */
-#scene4.zoom-in,
-#scene4.magical-reveal {
-  gap: 0;
-  padding: 0;
-  justify-content: center;
-}
-
-/* Zoom in effect - happens before magical reveal */
-#scene4.zoom-in .scene {
-  transform: scale(1.8);
-  z-index: 100;
-}
-
-#scene4.zoom-in .frame {
-  border-radius: 0;
-  transition: border-radius 3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Maintain fullscreen during magical effects */
+/* Zoom scene to fullscreen for magical effects */
 #scene4.magical-reveal .scene {
-  transform: scale(1.75);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(2.5);
   z-index: 100;
 }
 
 #scene4.magical-reveal .frame {
   border-radius: 0;
+}
+
+/* Hide buttons during final reveal */
+#scene4.magical-reveal .buttons {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
 /* Effects container */
@@ -374,21 +310,6 @@ body {
   pointer-events: none;
   z-index: 10;
   animation: fadeIn 2s ease-out forwards;
-}
-
-/* Vignette overlay */
-#magical-effects::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at center,
-    transparent 30%,
-    rgba(0, 0, 0, 0.3) 70%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
-  z-index: 30;
-  pointer-events: none;
 }
 
 @keyframes fadeIn {
@@ -487,7 +408,7 @@ body {
 /* Reveal Text Overlay */
 .reveal-text {
   position: absolute;
-  top: 36%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -498,27 +419,27 @@ body {
 }
 
 .reveal-title {
-  font-size: clamp(18px, 2.5vw, 30px);
+  font-size: clamp(32px, 5vw, 56px);
   font-weight: 700;
-  margin: 0 0 0px;
-  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.8);
+  margin: 0 0 10px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
   opacity: 0;
   animation: fadeInText 2s ease-out 3s forwards;
 }
 
 .reveal-subtitle {
-  font-size: clamp(12px, 1.5vw, 18px);
+  font-size: clamp(18px, 2.5vw, 28px);
   font-style: italic;
-  margin: 0 0 125px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.7);
+  margin: 0 0 40px;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
   opacity: 0;
   animation: fadeInText 2s ease-out 4.5s forwards;
 }
 
 .reveal-line {
-  font-size: clamp(10px, 1.1vw, 12px);
-  margin: 6px 0;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.7);
+  font-size: clamp(16px, 2vw, 22px);
+  margin: 15px 0;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
   opacity: 0;
 }
 

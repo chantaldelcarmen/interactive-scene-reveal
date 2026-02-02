@@ -24,12 +24,43 @@ muteToggle.addEventListener("click", () => {
   }
 });
 
+// Pause Button
+const pauseBtn = document.getElementById("pauseBtn");
+const pauseIcon = document.querySelector(".pause-icon");
+const playIcon = document.querySelector(".play-icon");
+let isPaused = false;
+
+pauseBtn.addEventListener("click", () => {
+  isPaused = !isPaused;
+  
+  if (isPaused) {
+    // Pause all media
+    ticketsVideo.pause();
+    planeVideo.pause();
+    magicalAudio.pause();
+  } else {
+    // Resume playing based on which scene is active
+    if (!scene1.classList.contains('hidden')) ticketsVideo.play();
+    if (!scene2.classList.contains('hidden')) planeVideo.play();
+    if (!magicalAudio.paused || hasRevealed) magicalAudio.play().catch(() => {});
+  }
+  
+  // Toggle icons
+  pauseIcon.classList.toggle("hidden", isPaused);
+  playIcon.classList.toggle("hidden", !isPaused);
+});
+
 // Replay Button
 const replayBtn = document.getElementById("replayBtn");
 replayBtn.addEventListener("click", () => {
   // Stop and reset magical audio
   magicalAudio.pause();
   magicalAudio.currentTime = 0;
+  
+  // Reset pause state
+  isPaused = false;
+  pauseIcon.classList.remove("hidden");
+  playIcon.classList.add("hidden");
   
   // Hide all scenes
   scene1.classList.remove("hidden");

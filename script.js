@@ -240,20 +240,22 @@ function triggerMagicalReveal() {
   if (hasRevealed) return;
   hasRevealed = true;
 
-  // Close all description popups
-  document.querySelectorAll(".description-popup").forEach(popup => {
-    popup.classList.remove("active");
-  });
+  // Close all description popups after 3 seconds delay
+  setTimeout(() => {
+    document.querySelectorAll(".description-popup").forEach(popup => {
+      popup.classList.remove("active");
+    });
+  }, 3000);
 
   // Step 1: Hide buttons
   // document.querySelector(".buttons").classList.add("fade-out");
 
-  // Step 2: After buttons fade, start zoom animation
+  // Step 2: After buttons fade, start zoom animation (3500ms = 3000ms delay + 500ms original)
   setTimeout(() => {
     scene4.classList.add("zoom-in");
-  }, 500);
+  }, 3500);
 
-  // Step 3: After zoom completes, show magical effects
+  // Step 3: After zoom completes, show magical effects (3500ms = 3000ms delay + 500ms original)
   setTimeout(() => {
     scene4.classList.add("magical-reveal");
     setHidden("magical-effects", false);

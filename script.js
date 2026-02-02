@@ -169,10 +169,20 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
     btn.classList.toggle("active", state[layerId]);
     updateScene();
 
-    // Toggle description popup
-    const descPopup = document.querySelector(`.description-popup[data-name="${personName}"]`);
-    if (descPopup) {
-      descPopup.classList.toggle("active");
+    // Show only one description at a time
+    const allPopups = document.querySelectorAll(".description-popup");
+    const currentPopup = document.querySelector(`.description-popup[data-name="${personName}"]`);
+    
+    if (currentPopup) {
+      const isActive = currentPopup.classList.contains("active");
+      
+      // Close all descriptions
+      allPopups.forEach(popup => popup.classList.remove("active"));
+      
+      // If this description wasn't active, show it (otherwise it stays closed)
+      if (!isActive) {
+        currentPopup.classList.add("active");
+      }
     }
   });
 });

@@ -1,3 +1,16 @@
+// Title Screen
+const titleScreen = document.getElementById("titleScreen");
+const startBtn = document.getElementById("startBtn");
+
+startBtn.addEventListener("click", () => {
+  titleScreen.classList.add("fade-out");
+  setTimeout(() => {
+    titleScreen.style.display = "none";
+    // Start the first video when entering the experience
+    ticketsVideo.play().catch(() => {});
+  }, 800);
+});
+
 // Mute Toggle
 const muteToggle = document.getElementById("muteToggle");
 const muteIcon = document.querySelector(".mute-icon");

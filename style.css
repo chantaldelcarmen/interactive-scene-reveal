@@ -80,7 +80,7 @@ body {
 
 .videoWrap {
   position: relative;
-  width: min(92vw, 960px);
+  width: min(98vw, 1400px);
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 18px;

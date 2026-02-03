@@ -234,6 +234,27 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
     const personName = btn.dataset.name;
     if (!(layerId in state)) return;
 
+    // Play character sound effect
+    const soundMap = {
+      'Umer': 'umerSound',
+      'Anna': 'annaSound',
+      'Chantal': 'chantalSound',
+      'Lei': 'leiSound'
+    };
+    const soundId = soundMap[personName];
+    if (soundId) {
+      const audio = document.getElementById(soundId);
+      audio.muted = isMuted;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+      
+      // Stop audio after 3 seconds
+      setTimeout(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      }, 3000);
+    }
+
     state[layerId] = !state[layerId];
     btn.classList.toggle("active", state[layerId]);
     updateScene();

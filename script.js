@@ -146,13 +146,13 @@ planeVideo.addEventListener("ended", () => {
   airplaneSecurityAudio.play().catch(() => {});
 });
 
-// Auto-advance scene 3 after 6 seconds (no click handler - auto only)
+// Auto-advance scene 3 after 8 seconds (no click handler - auto only)
 scene3.addEventListener("transitionend", (e) => {
   if (e.target === scene3 && !scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = setTimeout(() => {
       advanceToScene(scene3, scene4);
-    }, 6000);
+    }, 8000);
   }
 });
 
@@ -164,7 +164,7 @@ const observer = new MutationObserver((mutations) => {
         clearTimeout(autoAdvanceTimer);
         autoAdvanceTimer = setTimeout(() => {
           advanceToScene(scene3, scene4);
-        }, 6000);
+        }, 8000);
       } else {
         clearTimeout(autoAdvanceTimer);
       }

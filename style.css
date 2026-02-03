@@ -851,6 +851,13 @@ body {
   animation: fadeInText 2s ease-out 18.5s forwards;
 }
 
+.reveal-line.line-8 {
+  animation: fadeInText 2s ease-out 20.5s forwards;
+  font-size: 1.3em;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
 @keyframes fadeInText {
   from {
     opacity: 0;

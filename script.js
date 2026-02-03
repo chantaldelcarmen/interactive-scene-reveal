@@ -1,9 +1,21 @@
+// Title Screen
+const titleScreen = document.getElementById("titleScreen");
+const startBtn = document.getElementById("startBtn");
+
+startBtn.addEventListener("click", () => {
+  titleScreen.classList.add("fade-out");
+  setTimeout(() => {
+    titleScreen.style.display = "none";
+    // Start the first video when entering the experience
+    ticketsVideo.play().catch(() => {});
+  }, 800);
+});
+
 // Mute Toggle
 const muteToggle = document.getElementById("muteToggle");
 const muteIcon = document.querySelector(".mute-icon");
 const unmuteIcon = document.querySelector(".unmute-icon");
-const magicalAudio = document.getElementById("magicalAudio");
-let isMuted = true;
+const magicalAudio = document.getElementById("magicalAudio");const airplaneSecurityAudio = document.getElementById("airplaneSecurityAudio");let isMuted = false;
 
 muteToggle.addEventListener("click", () => {
   isMuted = !isMuted;
@@ -11,7 +23,9 @@ muteToggle.addEventListener("click", () => {
   // Toggle all videos
   ticketsVideo.muted = isMuted;
   planeVideo.muted = isMuted;
+  windowseatVideo.muted = isMuted;
   magicalAudio.muted = isMuted;
+  airplaneSecurityAudio.muted = isMuted;
   
   // Toggle icons
   muteIcon.classList.toggle("hidden", !isMuted);
@@ -21,7 +35,40 @@ muteToggle.addEventListener("click", () => {
   if (!isMuted) {
     if (!scene1.classList.contains('hidden')) ticketsVideo.play();
     if (!scene2.classList.contains('hidden')) planeVideo.play();
+    if (!scene3.classList.contains('hidden')) windowseatVideo.play();
   }
+});
+
+// Pause Button
+const pauseBtn = document.getElementById("pauseBtn");
+const pauseIcon = document.querySelector(".pause-icon");
+const playIcon = document.querySelector(".play-icon");
+let isPaused = false;
+
+pauseBtn.addEventListener("click", () => {
+  isPaused = !isPaused;
+  
+  if (isPaused) {
+    // Pause all media
+    ticketsVideo.pause();
+    planeVideo.pause();
+    windowseatVideo.pause();
+    airplaneSecurityAudio.pause();
+    magicalAudio.pause();
+  } else {
+    // Resume playing based on which scene is active
+    if (!scene1.classList.contains('hidden')) ticketsVideo.play();
+    if (!scene2.classList.contains('hidden')) planeVideo.play();
+    if (!scene3.classList.contains('hidden')) {
+      windowseatVideo.play();
+      airplaneSecurityAudio.play();
+    }
+    if (!magicalAudio.paused || hasRevealed) magicalAudio.play().catch(() => {});
+  }
+  
+  // Toggle icons
+  pauseIcon.classList.toggle("hidden", isPaused);
+  playIcon.classList.toggle("hidden", !isPaused);
 });
 
 // Replay Button
@@ -30,6 +77,11 @@ replayBtn.addEventListener("click", () => {
   // Stop and reset magical audio
   magicalAudio.pause();
   magicalAudio.currentTime = 0;
+  
+  // Reset pause state
+  isPaused = false;
+  pauseIcon.classList.remove("hidden");
+  playIcon.classList.add("hidden");
   
   // Hide all scenes
   scene1.classList.remove("hidden");
@@ -48,7 +100,13 @@ replayBtn.addEventListener("click", () => {
   // Reset state
   Object.keys(state).forEach(key => state[key] = false);
   document.querySelectorAll(".person-btn").forEach(btn => btn.classList.remove("active"));
+  
+  // Reset descriptions - hide all and show default
+  document.querySelectorAll(".description-popup").forEach(popup => popup.classList.remove("active"));
+  document.querySelector(".default-description")?.classList.add("active");
+  
   hasRevealed = false;
+  hasShimmered = false;
   updateScene();
   
   // Reset and restart tickets video
@@ -64,33 +122,47 @@ const scene4 = document.getElementById("scene4");
 
 const ticketsVideo = document.getElementById("ticketsVideo");
 const planeVideo = document.getElementById("planeVideo");
-const windowseatImage = document.getElementById("windowseatImage");
+const windowseatVideo = document.getElementById("windowseatImage");
 
 let autoAdvanceTimer = null;
 
 // After tickets video ends -> advance to scene2
 ticketsVideo.addEventListener("ended", () => {
-  advanceToScene(scene1, scene2);
+  setTimeout(() => {
+    advanceToScene(scene1, scene2);
 
-  // Restart plane video cleanly
-  planeVideo.currentTime = 0;
-  planeVideo.play().catch(() => {
-    // If autoplay fails, user can still press play
-  });
+    // Restart plane video cleanly
+    planeVideo.currentTime = 0;
+    planeVideo.play().catch(() => {
+      // If autoplay fails, user can still press play
+    });
+  }, 4000);
 });
 
 // After plane video ends -> advance to scene 3
 planeVideo.addEventListener("ended", () => {
-  advanceToScene(scene2, scene3);
+  setTimeout(() => {
+    advanceToScene(scene2, scene3);
+    
+    // Play the windowseat video when scene 3 appears
+    windowseatVideo.currentTime = 0;
+    windowseatVideo.playbackRate = 0.6;
+    windowseatVideo.play().catch(() => {});
+    
+    // Play airplane security audio
+    airplaneSecurityAudio.currentTime = 0;
+    airplaneSecurityAudio.muted = isMuted;
+    airplaneSecurityAudio.play().catch(() => {});
+  }, 4000);
 });
 
-// Auto-advance scene 3 after 6 seconds (no click handler - auto only)
+// Auto-advance scene 3 after 20 seconds (no click handler - auto only)
 scene3.addEventListener("transitionend", (e) => {
   if (e.target === scene3 && !scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = setTimeout(() => {
       advanceToScene(scene3, scene4);
-    }, 6000);
+    }, 20000);
   }
 });
 
@@ -102,7 +174,7 @@ const observer = new MutationObserver((mutations) => {
         clearTimeout(autoAdvanceTimer);
         autoAdvanceTimer = setTimeout(() => {
           advanceToScene(scene3, scene4);
-        }, 6000);
+        }, 20000);
       } else {
         clearTimeout(autoAdvanceTimer);
       }
@@ -139,20 +211,17 @@ function updateScene() {
   // Show/hide overlays according to toggles
   layers.forEach((id) => setHidden(id, !state[id]));
 
-  // // Show full color only when all are active
-  // if (allActive) {
-  //   layers.forEach((id) => setHidden(id, true));
-  //   setHidden("full", false);
-  // } else {
-  //   setHidden("full", true);
-  // }
-
   // Show full color only when all are active
   if (allActive) {
-    layers.forEach((id) => setHidden(id, true));
-    setHidden("full", false);
-
-    triggerMagicalReveal();
+    // Trigger shimmer animation immediately
+    triggerShimmerAnimation();
+    
+    // Delay full color reveal by 6 seconds
+    setTimeout(() => {
+      layers.forEach((id) => setHidden(id, true));
+      setHidden("full", false);
+      triggerMagicalReveal();
+    }, 6000);
   } else {
     setHidden("full", true);
   }
@@ -176,7 +245,7 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
     if (currentPopup) {
       const isActive = currentPopup.classList.contains("active");
       
-      // Close all descriptions
+      // Close all descriptions including default
       allPopups.forEach(popup => popup.classList.remove("active"));
       
       // If this description wasn't active, show it (otherwise it stays closed)
@@ -191,25 +260,81 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
 updateScene();
 
 let hasRevealed = false;
+let hasShimmered = false;
+
+function triggerShimmerAnimation() {
+  if (hasShimmered) return;
+  hasShimmered = true;
+  
+  const shimmerContainer = document.querySelector('.shimmer-container');
+  if (!shimmerContainer) return;
+  
+  // Play shimmer sound effect
+  const shimmerAudio = document.getElementById('shimmerAudio');
+  shimmerAudio.muted = isMuted;
+  shimmerAudio.currentTime = 0;
+  shimmerAudio.play().catch(() => {});
+  
+  shimmerContainer.classList.add('active');
+  
+  const colors = ['color-gold', 'color-pink', 'color-blue', 'color-green', 'color-purple', 'color-white'];
+  
+  // Create 150 particles with random positions, timing, and colors
+  for (let i = 0; i < 150; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'shimmer-particle';
+    
+    // Random color
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    particle.classList.add(randomColor);
+    
+    // Random horizontal position
+    const leftPos = Math.random() * 100;
+    particle.style.left = `${leftPos}%`;
+    
+    // Random starting vertical position
+    const topPos = 30 + Math.random() * 70;
+    particle.style.top = `${topPos}%`;
+    
+    // Random horizontal drift
+    const driftX = (Math.random() - 0.5) * 100;
+    particle.style.setProperty('--drift-x', `${driftX}px`);
+    
+    // Random delay and size variation
+    particle.style.animationDelay = `${Math.random() * 2.5}s`;
+    particle.style.width = `${15 + Math.random() * 15}px`;
+    particle.style.height = particle.style.width;
+    
+    shimmerContainer.appendChild(particle);
+  }
+  
+  // Remove particles after animation completes
+  setTimeout(() => {
+    shimmerContainer.classList.remove('active');
+    shimmerContainer.innerHTML = '';
+  }, 7000);
+}
 
 function triggerMagicalReveal() {
   if (hasRevealed) return;
   hasRevealed = true;
 
-  // Close all description popups
-  document.querySelectorAll(".description-popup").forEach(popup => {
-    popup.classList.remove("active");
-  });
+  // Close all description popups after 3 seconds delay
+  setTimeout(() => {
+    document.querySelectorAll(".description-popup").forEach(popup => {
+      popup.classList.remove("active");
+    });
+  }, 3000);
 
   // Step 1: Hide buttons
   // document.querySelector(".buttons").classList.add("fade-out");
 
-  // Step 2: After buttons fade, start zoom animation
+  // Step 2: After buttons fade, start zoom animation (3500ms = 3000ms delay + 500ms original)
   setTimeout(() => {
     scene4.classList.add("zoom-in");
-  }, 500);
+  }, 3500);
 
-  // Step 3: After zoom completes, show magical effects
+  // Step 3: After zoom completes, show magical effects (3500ms = 3000ms delay + 500ms original)
   setTimeout(() => {
     scene4.classList.add("magical-reveal");
     setHidden("magical-effects", false);

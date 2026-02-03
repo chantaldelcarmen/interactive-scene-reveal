@@ -17,6 +17,132 @@ body {
   background: #fff;
 }
 
+/* Title Screen */
+.title-screen {
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+}
+
+.title-content {
+  animation: fadeIn 1.5s ease-in;
+}
+
+.title-text {
+  font-family: 'Lora', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.05em;
+}
+
+.subtitle-text {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0 0 3rem 0;
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+}
+
+.start-btn {
+  font-family: 'Lora', serif;
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 18px;
+  padding: 1rem 3rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+  background: #fff;
+  color: #000;
+  transform: scale(1.05);
+}
+
+.start-btn:active {
+  transform: scale(0.98);
+}
+
+.credits {
+  margin-top: 3rem;
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  opacity: 0.85;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+.credits p {
+  margin: 0.5rem 0;
+}
+
+.credits-course {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.credits-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 1rem auto;
+}
+
+.credits-team {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive title screen */
+@media (max-width: 768px) {
+  .title-text {
+    font-size: 2.5rem;
+  }
+  .subtitle-text {
+    font-size: 1rem;
+  }
+  .start-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+  .credits {
+    font-size: 0.65rem;
+  }
+  .credits-course {
+    font-size: 0.6rem;
+  }
+  .credits-team {
+    font-size: 0.7rem;
+  }
+}
+
 /* Mute Toggle Button */
 .mute-toggle {
   position: fixed;
@@ -77,11 +203,41 @@ body {
   transform: scale(0.95);
 }
 
+/* Pause Button */
+.pause-btn {
+  position: fixed;
+  top: 20px;
+  right: 140px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pause-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.1);
+}
+
+.pause-btn:active {
+  transform: scale(0.95);
+}
+
 .hidden {
   display: none !important;
 }
 
-/* Intro video “screens” */
+/* Intro video "screens" */
 .screen {
   height: 100vh;
   display: flex;
@@ -116,19 +272,21 @@ body {
 
 /* Soften scene 3 window seat image */
 #windowseatImage {
-  filter: grayscale(100%) brightness(1.15) contrast(0.85);
+  filter: none;
   opacity: 0.95;
 }
 
 /* Text overlay for intro scenes */
 .caption {
-  max-width: min(85%, 780px);
+  max-width: min(90%, 1000px);
   margin: 0 auto;
   padding: 0 20px;
   color: #000;
   font-family: 'Lora', serif;
   text-align: center;
   flex-shrink: 0;
+  min-height: 60px;
+  animation: fadeIn 1.2s ease-out;
 }
 
 .caption h1 {
@@ -175,23 +333,120 @@ body {
 }
 
 /* Scene 4 (interactive scene) */
+/* Uses .screen class for layout - only custom styles below */
 
 #scene4 {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 15px;
-  padding-top: 20px;
-  gap: 24px;
+  position: relative;
+}
+
+/* Rising Shimmer Animation */
+.shimmer-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 50;
+}
+
+.shimmer-container.active {
+  opacity: 1;
+}
+
+.shimmer-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: riseShimmer 4s ease-out forwards;
+}
+
+.shimmer-particle.color-gold {
+  background: radial-gradient(circle, rgba(255, 223, 128, 1) 0%, rgba(255, 215, 0, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 1),
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 60px rgba(255, 215, 0, 0.3);
+}
+
+.shimmer-particle.color-pink {
+  background: radial-gradient(circle, rgba(255, 192, 203, 1) 0%, rgba(255, 105, 180, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(255, 105, 180, 1),
+    0 0 40px rgba(255, 105, 180, 0.6),
+    0 0 60px rgba(255, 105, 180, 0.3);
+}
+
+.shimmer-particle.color-blue {
+  background: radial-gradient(circle, rgba(135, 206, 250, 1) 0%, rgba(0, 191, 255, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(0, 191, 255, 1),
+    0 0 40px rgba(0, 191, 255, 0.6),
+    0 0 60px rgba(0, 191, 255, 0.3);
+}
+
+.shimmer-particle.color-green {
+  background: radial-gradient(circle, rgba(144, 238, 144, 1) 0%, rgba(34, 139, 34, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(34, 139, 34, 1),
+    0 0 40px rgba(34, 139, 34, 0.6),
+    0 0 60px rgba(34, 139, 34, 0.3);
+}
+
+.shimmer-particle.color-purple {
+  background: radial-gradient(circle, rgba(221, 160, 221, 1) 0%, rgba(147, 112, 219, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(147, 112, 219, 1),
+    0 0 40px rgba(147, 112, 219, 0.6),
+    0 0 60px rgba(147, 112, 219, 0.3);
+}
+
+.shimmer-particle.color-white {
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 1),
+    0 0 40px rgba(255, 255, 255, 0.6),
+    0 0 60px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes riseShimmer {
+  0% {
+    transform: translateY(0) translateX(0) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-40px) translateX(var(--drift-x, 0)) scale(1.2) rotate(180deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-300px) translateX(var(--drift-x, 0)) scale(0.4) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Remove gaps for Scene 4 caption */
+#scene4 .caption {
+  min-height: 0;
+}
+
+#scene4 .caption h1 {
+  margin: 0;
 }
 
 .scene {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   transform-origin: center center;
   transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 1;
 }
 
 .frame {
@@ -220,14 +475,18 @@ body {
   opacity: 0.95;
 }
 
-/* Buttons above scene */
+/* Buttons overlaid on scene */
 .buttons {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-28%);
   display: flex;
   gap: 45px;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: min(95vw, 1200px);
-  flex-shrink: 0;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .person-btn {
@@ -239,33 +498,68 @@ body {
   align-items: center;
   gap: 10px;
   padding: 0;
+  pointer-events: auto;
 }
 
 .person-btn img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  border: 3px solid #fff;
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .person-btn span {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.person-btn:hover img {
+/* Colored hover glows */
+.person-btn[data-name="Umer"]:hover img {
   transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(139, 90, 43, 1), 0 0 60px rgba(139, 90, 43, 0.6), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.person-btn[data-name="Anna"]:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.6), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.person-btn[data-name="Chantal"]:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(135, 206, 250, 1), 0 0 60px rgba(135, 206, 250, 0.6), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.person-btn[data-name="Lei"]:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(34, 139, 34, 1), 0 0 60px rgba(34, 139, 34, 0.6), 0 6px 16px rgba(0,0,0,0.25);
 }
 
 /* Active ring */
 .person-btn.active img {
-  box-shadow:
-    0 0 0 5px #000,
-    0 6px 16px rgba(0,0,0,0.35);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   opacity: 0.85;
   transform: scale(0.96);
+}
+
+/* Colored borders when active */
+.person-btn.active[data-name="Umer"] img {
+  border-color: rgb(139, 90, 43);
+}
+
+.person-btn.active[data-name="Anna"] img {
+  border-color: rgb(255, 215, 0);
+}
+
+.person-btn.active[data-name="Chantal"] img {
+  border-color: rgb(135, 206, 250);
+}
+
+.person-btn.active[data-name="Lei"] img {
+  border-color: rgb(34, 139, 34);
 }
 
 
@@ -274,11 +568,12 @@ body {
 .descriptions-container {
   position: relative;
   width: 100%;
-  max-width: min(85%, 780px);
-  height: 30px;
+  max-width: min(90%, 900px);
+  min-height: 40px;
   margin: 0 auto;
-  padding-bottom: 10px;
+  padding: 0 20px;
   pointer-events: none;
+  flex-shrink: 0;
 }
 
 .description-popup {
@@ -293,11 +588,17 @@ body {
   transition: opacity 0.4s ease;
   color: #000;
   font-family: 'Lora', serif;
+  background: #fff;
 }
 
 .description-popup.active {
   opacity: 1;
   pointer-events: auto;
+}
+
+.default-description {
+  font-style: italic;
+  opacity: 0.75;
 }
 
 .description-popup h3 {
@@ -534,6 +835,29 @@ body {
   animation: fadeInText 2s ease-out 10.5s forwards;
 }
 
+.reveal-line.line-4 {
+  animation: fadeInText 2s ease-out 12.5s forwards;
+}
+
+.reveal-line.line-5 {
+  animation: fadeInText 2s ease-out 14.5s forwards;
+}
+
+.reveal-line.line-6 {
+  animation: fadeInText 2s ease-out 16.5s forwards;
+}
+
+.reveal-line.line-7 {
+  animation: fadeInText 2s ease-out 18.5s forwards;
+}
+
+.reveal-line.line-8 {
+  animation: fadeInText 2s ease-out 20.5s forwards;
+  font-size: 1.3em;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
 @keyframes fadeInText {
   from {
     opacity: 0;
@@ -544,7 +868,10 @@ body {
     transform: translateY(0);
   }
 }
-
+.title-screen.fade-out {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
 /* Sparkle overlay effect */
 .sparkles {
     position: absolute;

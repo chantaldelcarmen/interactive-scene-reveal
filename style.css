@@ -411,7 +411,7 @@ body {
   border-radius: 50%;
   border: 3px solid #fff;
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.3s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .person-btn span {
@@ -444,11 +444,26 @@ body {
 
 /* Active ring */
 .person-btn.active img {
-  box-shadow:
-    0 0 0 5px #fff,
-    0 6px 16px rgba(0,0,0,0.35);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   opacity: 0.85;
   transform: scale(0.96);
+}
+
+/* Colored borders when active */
+.person-btn.active[data-name="Umer"] img {
+  border-color: rgb(139, 90, 43);
+}
+
+.person-btn.active[data-name="Anna"] img {
+  border-color: rgb(255, 215, 0);
+}
+
+.person-btn.active[data-name="Chantal"] img {
+  border-color: rgb(135, 206, 250);
+}
+
+.person-btn.active[data-name="Lei"] img {
+  border-color: rgb(34, 139, 34);
 }
 
 

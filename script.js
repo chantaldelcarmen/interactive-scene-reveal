@@ -211,10 +211,12 @@ function updateScene() {
 
   // Show full color only when all are active
   if (allActive) {
-    layers.forEach((id) => setHidden(id, true));
-    setHidden("full", false);
-
-    triggerMagicalReveal();
+    // Delay full color reveal by 8 seconds
+    setTimeout(() => {
+      layers.forEach((id) => setHidden(id, true));
+      setHidden("full", false);
+      triggerMagicalReveal();
+    }, 8000);
   } else {
     setHidden("full", true);
   }

@@ -333,13 +333,12 @@ body {
 /* Scene 4 (interactive scene) */
 
 #scene4 {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 15px;
-  padding-top: 20px;
   gap: 24px;
 }
 
@@ -355,7 +354,7 @@ body {
   width: min(95vw, 1200px);
   max-height: 75vh;
   aspect-ratio: 16 / 9;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 18px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
@@ -376,14 +375,18 @@ body {
   opacity: 0.95;
 }
 
-/* Buttons above scene */
+/* Buttons overlaid on scene */
 .buttons {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-28%);
   display: flex;
   gap: 45px;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: min(95vw, 1200px);
-  flex-shrink: 0;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .person-btn {
@@ -395,30 +398,50 @@ body {
   align-items: center;
   gap: 10px;
   padding: 0;
+  pointer-events: auto;
 }
 
 .person-btn img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  border: 3px solid #fff;
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.3s ease;
 }
 
 .person-btn span {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.person-btn:hover img {
+/* Colored hover glows */
+.person-btn[data-name="Umer"]:hover img {
   transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(139, 90, 43, 1), 0 0 60px rgba(139, 90, 43, 0.6), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.person-btn[data-name="Anna"]:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.6), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.person-btn[data-name="Chantal"]:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(135, 206, 250, 1), 0 0 60px rgba(135, 206, 250, 0.6), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.person-btn[data-name="Lei"]:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(34, 139, 34, 1), 0 0 60px rgba(34, 139, 34, 0.6), 0 6px 16px rgba(0,0,0,0.25);
 }
 
 /* Active ring */
 .person-btn.active img {
   box-shadow:
-    0 0 0 5px #000,
+    0 0 0 5px #fff,
     0 6px 16px rgba(0,0,0,0.35);
   opacity: 0.85;
   transform: scale(0.96);
@@ -431,10 +454,11 @@ body {
   position: relative;
   width: 100%;
   max-width: min(85%, 780px);
-  height: 30px;
+  min-height: 60px;
   margin: 0 auto;
-  padding-bottom: 10px;
+  padding: 0 20px;
   pointer-events: none;
+  flex-shrink: 0;
 }
 
 .description-popup {

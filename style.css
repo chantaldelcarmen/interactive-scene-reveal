@@ -335,6 +335,102 @@ body {
 /* Scene 4 (interactive scene) */
 /* Uses .screen class for layout - only custom styles below */
 
+#scene4 {
+  position: relative;
+}
+
+/* Rising Shimmer Animation */
+.shimmer-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 50;
+}
+
+.shimmer-container.active {
+  opacity: 1;
+}
+
+.shimmer-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: riseShimmer 4s ease-out forwards;
+}
+
+.shimmer-particle.color-gold {
+  background: radial-gradient(circle, rgba(255, 223, 128, 1) 0%, rgba(255, 215, 0, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 1),
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 60px rgba(255, 215, 0, 0.3);
+}
+
+.shimmer-particle.color-pink {
+  background: radial-gradient(circle, rgba(255, 192, 203, 1) 0%, rgba(255, 105, 180, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(255, 105, 180, 1),
+    0 0 40px rgba(255, 105, 180, 0.6),
+    0 0 60px rgba(255, 105, 180, 0.3);
+}
+
+.shimmer-particle.color-blue {
+  background: radial-gradient(circle, rgba(135, 206, 250, 1) 0%, rgba(0, 191, 255, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(0, 191, 255, 1),
+    0 0 40px rgba(0, 191, 255, 0.6),
+    0 0 60px rgba(0, 191, 255, 0.3);
+}
+
+.shimmer-particle.color-green {
+  background: radial-gradient(circle, rgba(144, 238, 144, 1) 0%, rgba(34, 139, 34, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(34, 139, 34, 1),
+    0 0 40px rgba(34, 139, 34, 0.6),
+    0 0 60px rgba(34, 139, 34, 0.3);
+}
+
+.shimmer-particle.color-purple {
+  background: radial-gradient(circle, rgba(221, 160, 221, 1) 0%, rgba(147, 112, 219, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(147, 112, 219, 1),
+    0 0 40px rgba(147, 112, 219, 0.6),
+    0 0 60px rgba(147, 112, 219, 0.3);
+}
+
+.shimmer-particle.color-white {
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 1),
+    0 0 40px rgba(255, 255, 255, 0.6),
+    0 0 60px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes riseShimmer {
+  0% {
+    transform: translateY(0) translateX(0) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-40px) translateX(var(--drift-x, 0)) scale(1.2) rotate(180deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-300px) translateX(var(--drift-x, 0)) scale(0.4) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 /* Remove gaps for Scene 4 caption */
 #scene4 .caption {
   min-height: 0;

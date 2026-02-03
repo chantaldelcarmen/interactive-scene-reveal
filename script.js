@@ -106,6 +106,7 @@ replayBtn.addEventListener("click", () => {
   document.querySelector(".default-description")?.classList.add("active");
   
   hasRevealed = false;
+  hasShimmered = false;
   updateScene();
   
   // Reset and restart tickets video
@@ -212,12 +213,15 @@ function updateScene() {
 
   // Show full color only when all are active
   if (allActive) {
-    // Delay full color reveal by 8 seconds
+    // Trigger shimmer animation immediately
+    triggerShimmerAnimation();
+    
+    // Delay full color reveal by 6 seconds
     setTimeout(() => {
       layers.forEach((id) => setHidden(id, true));
       setHidden("full", false);
       triggerMagicalReveal();
-    }, 8000);
+    }, 6000);
   } else {
     setHidden("full", true);
   }
@@ -256,6 +260,60 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
 updateScene();
 
 let hasRevealed = false;
+let hasShimmered = false;
+
+function triggerShimmerAnimation() {
+  if (hasShimmered) return;
+  hasShimmered = true;
+  
+  const shimmerContainer = document.querySelector('.shimmer-container');
+  if (!shimmerContainer) return;
+  
+  // Play shimmer sound effect
+  const shimmerAudio = document.getElementById('shimmerAudio');
+  shimmerAudio.muted = isMuted;
+  shimmerAudio.currentTime = 0;
+  shimmerAudio.play().catch(() => {});
+  
+  shimmerContainer.classList.add('active');
+  
+  const colors = ['color-gold', 'color-pink', 'color-blue', 'color-green', 'color-purple', 'color-white'];
+  
+  // Create 150 particles with random positions, timing, and colors
+  for (let i = 0; i < 150; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'shimmer-particle';
+    
+    // Random color
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    particle.classList.add(randomColor);
+    
+    // Random horizontal position
+    const leftPos = Math.random() * 100;
+    particle.style.left = `${leftPos}%`;
+    
+    // Random starting vertical position
+    const topPos = 30 + Math.random() * 70;
+    particle.style.top = `${topPos}%`;
+    
+    // Random horizontal drift
+    const driftX = (Math.random() - 0.5) * 100;
+    particle.style.setProperty('--drift-x', `${driftX}px`);
+    
+    // Random delay and size variation
+    particle.style.animationDelay = `${Math.random() * 2.5}s`;
+    particle.style.width = `${15 + Math.random() * 15}px`;
+    particle.style.height = particle.style.width;
+    
+    shimmerContainer.appendChild(particle);
+  }
+  
+  // Remove particles after animation completes
+  setTimeout(() => {
+    shimmerContainer.classList.remove('active');
+    shimmerContainer.innerHTML = '';
+  }, 7000);
+}
 
 function triggerMagicalReveal() {
   if (hasRevealed) return;

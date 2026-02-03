@@ -278,13 +278,14 @@ body {
 
 /* Text overlay for intro scenes */
 .caption {
-  max-width: min(85%, 780px);
+  max-width: min(90%, 1000px);
   margin: 0 auto;
   padding: 0 20px;
   color: #000;
   font-family: 'Lora', serif;
   text-align: center;
   flex-shrink: 0;
+  min-height: 60px;
 }
 
 .caption h1 {
@@ -331,22 +332,24 @@ body {
 }
 
 /* Scene 4 (interactive scene) */
+/* Uses .screen class for layout - only custom styles below */
 
-#scene4 {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  gap: 24px;
+/* Remove gaps for Scene 4 caption */
+#scene4 .caption {
+  min-height: 0;
+}
+
+#scene4 .caption h1 {
+  margin: 0;
 }
 
 .scene {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   transform-origin: center center;
   transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 1;
 }
 
 .frame {
@@ -354,7 +357,7 @@ body {
   width: min(95vw, 1200px);
   max-height: 75vh;
   aspect-ratio: 16 / 9;
-  overflow: visible;
+  overflow: hidden;
   border-radius: 18px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 30px rgba(0,0,0,0.18);
@@ -378,7 +381,7 @@ body {
 /* Buttons overlaid on scene */
 .buttons {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-28%);
   display: flex;
@@ -453,8 +456,8 @@ body {
 .descriptions-container {
   position: relative;
   width: 100%;
-  max-width: min(85%, 780px);
-  min-height: 60px;
+  max-width: min(90%, 900px);
+  min-height: 40px;
   margin: 0 auto;
   padding: 0 20px;
   pointer-events: none;

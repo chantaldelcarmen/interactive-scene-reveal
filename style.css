@@ -724,6 +724,22 @@ body {
   animation: fadeInText 2s ease-out 10.5s forwards;
 }
 
+.reveal-line.line-4 {
+  animation: fadeInText 2s ease-out 12.5s forwards;
+}
+
+.reveal-line.line-5 {
+  animation: fadeInText 2s ease-out 14.5s forwards;
+}
+
+.reveal-line.line-6 {
+  animation: fadeInText 2s ease-out 16.5s forwards;
+}
+
+.reveal-line.line-7 {
+  animation: fadeInText 2s ease-out 18.5s forwards;
+}
+
 @keyframes fadeInText {
   from {
     opacity: 0;

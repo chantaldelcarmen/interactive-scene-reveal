@@ -100,6 +100,11 @@ replayBtn.addEventListener("click", () => {
   // Reset state
   Object.keys(state).forEach(key => state[key] = false);
   document.querySelectorAll(".person-btn").forEach(btn => btn.classList.remove("active"));
+  
+  // Reset descriptions - hide all and show default
+  document.querySelectorAll(".description-popup").forEach(popup => popup.classList.remove("active"));
+  document.querySelector(".default-description")?.classList.add("active");
+  
   hasRevealed = false;
   updateScene();
   
@@ -122,37 +127,41 @@ let autoAdvanceTimer = null;
 
 // After tickets video ends -> advance to scene2
 ticketsVideo.addEventListener("ended", () => {
-  advanceToScene(scene1, scene2);
+  setTimeout(() => {
+    advanceToScene(scene1, scene2);
 
-  // Restart plane video cleanly
-  planeVideo.currentTime = 0;
-  planeVideo.play().catch(() => {
-    // If autoplay fails, user can still press play
-  });
+    // Restart plane video cleanly
+    planeVideo.currentTime = 0;
+    planeVideo.play().catch(() => {
+      // If autoplay fails, user can still press play
+    });
+  }, 4000);
 });
 
 // After plane video ends -> advance to scene 3
 planeVideo.addEventListener("ended", () => {
-  advanceToScene(scene2, scene3);
-  
-  // Play the windowseat video when scene 3 appears
-  windowseatVideo.currentTime = 0;
-  windowseatVideo.playbackRate = 0.6;
-  windowseatVideo.play().catch(() => {});
-  
-  // Play airplane security audio
-  airplaneSecurityAudio.currentTime = 0;
-  airplaneSecurityAudio.muted = isMuted;
-  airplaneSecurityAudio.play().catch(() => {});
+  setTimeout(() => {
+    advanceToScene(scene2, scene3);
+    
+    // Play the windowseat video when scene 3 appears
+    windowseatVideo.currentTime = 0;
+    windowseatVideo.playbackRate = 0.6;
+    windowseatVideo.play().catch(() => {});
+    
+    // Play airplane security audio
+    airplaneSecurityAudio.currentTime = 0;
+    airplaneSecurityAudio.muted = isMuted;
+    airplaneSecurityAudio.play().catch(() => {});
+  }, 4000);
 });
 
-// Auto-advance scene 3 after 8 seconds (no click handler - auto only)
+// Auto-advance scene 3 after 20 seconds (no click handler - auto only)
 scene3.addEventListener("transitionend", (e) => {
   if (e.target === scene3 && !scene3.classList.contains("hidden") && scene4.classList.contains("hidden")) {
     clearTimeout(autoAdvanceTimer);
     autoAdvanceTimer = setTimeout(() => {
       advanceToScene(scene3, scene4);
-    }, 8000);
+    }, 20000);
   }
 });
 
@@ -164,7 +173,7 @@ const observer = new MutationObserver((mutations) => {
         clearTimeout(autoAdvanceTimer);
         autoAdvanceTimer = setTimeout(() => {
           advanceToScene(scene3, scene4);
-        }, 8000);
+        }, 20000);
       } else {
         clearTimeout(autoAdvanceTimer);
       }
@@ -201,14 +210,6 @@ function updateScene() {
   // Show/hide overlays according to toggles
   layers.forEach((id) => setHidden(id, !state[id]));
 
-  // // Show full color only when all are active
-  // if (allActive) {
-  //   layers.forEach((id) => setHidden(id, true));
-  //   setHidden("full", false);
-  // } else {
-  //   setHidden("full", true);
-  // }
-
   // Show full color only when all are active
   if (allActive) {
     // Delay full color reveal by 8 seconds
@@ -240,7 +241,7 @@ document.querySelectorAll(".person-btn").forEach((btn) => {
     if (currentPopup) {
       const isActive = currentPopup.classList.contains("active");
       
-      // Close all descriptions
+      // Close all descriptions including default
       allPopups.forEach(popup => popup.classList.remove("active"));
       
       // If this description wasn't active, show it (otherwise it stays closed)

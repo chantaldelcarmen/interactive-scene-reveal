@@ -286,6 +286,7 @@ body {
   text-align: center;
   flex-shrink: 0;
   min-height: 60px;
+  animation: fadeIn 1.2s ease-out;
 }
 
 .caption h1 {
@@ -476,11 +477,17 @@ body {
   transition: opacity 0.4s ease;
   color: #000;
   font-family: 'Lora', serif;
+  background: #fff;
 }
 
 .description-popup.active {
   opacity: 1;
   pointer-events: auto;
+}
+
+.default-description {
+  font-style: italic;
+  opacity: 0.75;
 }
 
 .description-popup h3 {
